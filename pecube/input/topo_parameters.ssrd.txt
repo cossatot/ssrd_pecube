@@ -82,7 +82,7 @@ $ otherwise it should contain the number of data points (locations)
 $ for each location a line containing sample longitude, latitude, elevation
 $ as well as Apatite He age, error in age, Apatite FT age, error in age
 $ with a negative age corresponding to a non-existing age
-Nil
+ssrd_thermo_data.txt
 
 $ (13) the default age (in Myr) for rocks that never reach the closure
 $   temperature, a flag to decide which apatite FT routine to use (0 = van der
