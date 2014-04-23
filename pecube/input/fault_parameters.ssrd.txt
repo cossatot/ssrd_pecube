@@ -1,14 +1,19 @@
-$ number of faults active at any time during the run
-2
+1
 
 $ fault 1
 $ two points (in longitude-latitude) defining the y axis of the
 $ coordinate system used to define the faults
 $ the x-axis is to the right of the y-axis
+<<<<<<< HEAD
 $-114.130722 38.727500 -114.251462 39.146803  Styron coordinates
 $-114.195774 38.901634 -114.159784 39.000531  Evans coordinates
 -114.28 38.667 -114.1 39.16461
 
+=======
+-114.195774 38.901634 -114.159784 39.000531
+$-114.130722 38.727500 -114.251462 39.146803
+$-114.166349 38.844611 -114.194217 39.007765 
+>>>>>>> dd08c9d7e4aadf845a3704ef92ff88bb0127199e
 
 $ 
 $ number of points defining fault
@@ -44,12 +49,16 @@ $ from x-section by McGrew 1993
 
 
 $ number of time intervals to define its motion story
-1
+2
 $1
 
 $ time interval (in geological time) and velocity
 $ thrust is negative, normal is positive
+<<<<<<< HEAD
 40. 20. 1.
+=======
+40. 20. 0.
+>>>>>>> dd08c9d7e4aadf845a3704ef92ff88bb0127199e
 
 
 
