@@ -4,9 +4,71 @@ import pandas as pd
 import subprocess, shutil
 
 
+def make_history_df_cols(fault, num_times, param='both'):
+    
+    time_cols = ['t{}{}'.format(fault, interval) 
+                 for interval in (np.arange(num_times+1) + 1)]
+    
+    rate_cols = ['r{}{}'.format(fault, interval)
+                 for interval in (np.arange(num_times) + 1)]
+    
+    if param=='time':
+        return time_cols
+    
+    elif param=='rate':
+        return rate_cols
+    
+    elif param=='both':
+        return time_cols + rate_cols
+    
+
+def sample_histories(num_samps=None, num_times=None, age_max=None, 
+                     age_min=None, rate_max=None, rate_min=None, 
+                     zero_to_modern=False, fault='A'):
+    
+    time_df = make_time_df(age_min, age_max, num_samps, num_times, fault)
+    
+    
+    rate_df = make_rate_df(rate_min, rate_max, num_samps, num_times,
+                           fault, zero_to_modern)
+    
+    return pd.concat([time_df, rate_df], axis=1)
+    
+    
+def make_time_df(age_min, age_max, num_samps, num_times, fault):
+    
+    time_array = np.random.uniform(low=age_min, high=age_max,
+                                   size=[num_samps, num_times])
+    
+    time_array = np.fliplr( np.sort(time_array, axis=1) )
+
+    time_array = np.hstack([time_array, np.zeros([num_samps, 1])])
+    
+    
+    time_cols = make_history_df_cols(fault, num_times, 'time')
+    
+    return pd.DataFrame(data=time_array, columns=time_cols)
+    
+
+def make_rate_df(rate_min, rate_max, num_samps, num_times, 
+                 fault, zero_to_modern):
+    
+    rate_array = np.random.uniform(low=rate_min, high=rate_max,
+                                   size=[num_samps, num_times])
+    
+    if zero_to_modern:
+        rate_array[:,-1] = 0.
+        
+    rate_cols = make_history_df_cols(fault, num_times, param='rate')
+    
+    return pd.DataFrame(data=rate_array, columns=rate_cols)
+
+
 def calc_net_extension(init, accel, sr1, sr2, fault_dip):
     """
-    imports fault slip information and calculates net slip and extension
+    imports fault slip information and calculates net slip and extension.
+
+    Obsolete, use 'calc_horiz_fault_strain() instead
     """
     slip1 = (init - accel) * sr1
     slip2 = accel * sr2
@@ -20,6 +82,8 @@ def calc_net_extension(init, accel, sr1, sr2, fault_dip):
 def calc_net_shortening(init, accel, sr1, sr2, fault_dip):
     """
     imports fault slip information and calculates net slip and shortening
+
+    Obsolete, use 'calc_horiz_fault_strain()' instead
     """
     slip1 = (init - accel) * sr1 * -1
     slip2 = accel * sr2 * -1

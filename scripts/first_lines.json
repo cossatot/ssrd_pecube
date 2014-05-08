@@ -1,0 +1,9 @@
+{
+    'fault_lines': {
+        'flA': 30,
+        'flB': 50
+    },
+    'topo_lines': {
+        'run_dir': 7
+    }
+}
