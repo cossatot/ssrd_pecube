@@ -50,7 +50,7 @@ $ (6) the longitude and latitude of the bottom left corner of the topo file
 -114.6004165456 38.799583430181
 
 $ (7) the number of time steps in the tectonomorphic scenario
-2
+3
 
 $ (8) the erosional time scale (exponential decay rate of topography)
 0.
@@ -61,7 +61,6 @@ $ (b) an amplification factor for the topography
 $ (c) an offset factor (in km), 
 $ (d) an output flag (for this time step: 0=no output / 1=output)
 40. 1. 0. 1
-20. 1. 0. 1
 0. 1. 0. 1
 
 $ (10) a flag for isostasy (1 isostasy on; 0 isostast off)
@@ -74,7 +73,7 @@ $ (11) the model thickness (in km), number of points in the z direction,
 $   thermal diffusivity in km2/Myr, temperature at the base of the model (in
 $   C), temperature at z=0 (in C), atmospheric lapse rate (in /km), heat
 $   production in C/My
-35.,35,25.,850.,0.,0.,0.
+30.,30,25.,900.,14.,0.,20.
 
 $ (12) name of the file containing the thermochronological data
 $ if Nil no date
@@ -82,7 +81,7 @@ $ otherwise it should contain the number of data points (locations)
 $ for each location a line containing sample longitude, latitude, elevation
 $ as well as Apatite He age, error in age, Apatite FT age, error in age
 $ with a negative age corresponding to a non-existing age
-ssrd_thermo_data.txt
+ssrthermodata.txt
 
 $ (13) the default age (in Myr) for rocks that never reach the closure
 $   temperature, a flag to decide which apatite FT routine to use (0 = van der
