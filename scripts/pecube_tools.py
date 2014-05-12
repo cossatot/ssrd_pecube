@@ -198,9 +198,40 @@ def write_fault_hist_lines(fault_line, fault_line_no, input_file, output_file):
     input_file.close()
     output_file.close()
 
+def write_lines(line_string, line_num, input_file, output_file):
+    """
+    Opens the fault_parameters.txt file and writes a single fault history line,
+    called 'fault_line'.
+    
+    Saves the result each time if asked.
+    """ 
+    input_file = open(input_file, 'r')
+    output_file = open(output_file, 'w+')
+    
+    start_pt = 0
+    line_no = 0    
+    
+    while 1:
+        line = input_file.readline()
+        if not line:
+            break
+        
+        line_no = line_no + 1
+        
+        if line_no == line_num:
+            mod_line = line[:start_pt] + line_str
+            output_file.write(mod_line)
+        
+        else:
+            output_file.write(line)
+
+            
+    input_file.close()
+    output_file.close()
+
 
 def modify_fault_history(fault_params_dict, fault_list, 
-                       fault_hist_first_lines_dict, num_time_intervals = 1, 
+                       fault_hist_first_lines_dict, time_int_dict, 
                        input_file = 'file', output_file = 'file'):
     """
     Takes Pecube fault_parameters.txt and modifies the parameters for fault
@@ -215,7 +246,8 @@ def modify_fault_history(fault_params_dict, fault_list,
     
     for fault in fault_list:
         fault_line_no = fld[ 'fl{}'.format(fault) ]
-        
+        num_time_intervals = time_int_dict[fault]
+
         for time_int in range(num_time_intervals):
             
             t_int = time_int + 1
@@ -225,13 +257,25 @@ def modify_fault_history(fault_params_dict, fault_list,
             
             fault_line = '{} {} {} \n'.format(time_1, time_2, rate)
             write_fault_hist_lines(fault_line, fault_line_no, input_file,
-                                  output_file)
+                                   output_file)
             rename_fault_params_old(input_file, output_file)            
             fault_line_no += 1
 
 
-def modify_topo_parameters():
-    pass
+def modify_topo_parameters(topo_param_dict, input_file, output_file):
+    """
+    Modifies Pecube topo_parameters.txt file.
+
+    Takes 'topo_param_dict', a dictionary of parameters, and replaces lines
+    containing each para ... blahh...
+
+    Currently just replaces lines, so '
+    """
+    for param in topo_param_dict.keys:
+        line_num = topo_param_dict[param]['fl']
+        line_str = topo_param_dict[param]['value'] 
+
+        write_lines(line_str, line_num, input_file, output_file)
 
 
 def rename_fault_params_old(input_file, output_file):

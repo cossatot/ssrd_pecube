@@ -19,9 +19,9 @@ ssrd_dip_deg = 15
 ssrd_dip_rad = np.radians(ssrd_dip_deg)
 ssrd_n_times = 4
 ssrd_age_max = 80
-ssrd_age_min=5
-ssrd_rate_max=10
-ssrd_rate_min=0
+ssrd_age_min = 5
+ssrd_rate_max = 10
+ssrd_rate_min = 0
 #ssrd_extension_min = None
 #ssrd_extension_max = None
 
@@ -29,9 +29,9 @@ wpf_dip_deg = 40
 wpf_dip_rad = np.radians(wpf_dip_deg)
 wpf_n_times = 3
 wpf_age_max = 40
-wpf_age_min=0
-wpf_rate_max=2
-wpf_rate_min=0
+wpf_age_min = 0
+wpf_rate_max = 4
+wpf_rate_min = 0
 #wpf_extension_min = None
 #wpf_extension_max = None
 
@@ -61,9 +61,9 @@ def make_fault_history_df(): # defined here so all variables can be accessed
                                + new_df.wpf_extension)
     
     new_df = new_df[(min_extension <= new_df.net_extension)
-                          & (max_extension >= new_df.net_extension)
-                          & (new_df.ssrd_extension 
-                             >= 2 * new_df.wpf_extension)]
+                          & (max_extension >= new_df.net_extension)]
+                          #& (new_df.ssrd_extension 
+                          #   >= 2 * new_df.wpf_extension)]
     
     return new_df
 
