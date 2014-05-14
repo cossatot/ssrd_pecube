@@ -5,6 +5,7 @@ cd ~eqsarah
 #run_id=7a80c
 run_id=$1
 pecube_dir=pecube_temps/$run_id/Pecube
+script_dir=~eqsarah/src/Pecube/scripts
 
 mkdir -p ssrd_pecube/comparisons
 
@@ -22,14 +23,14 @@ cp -R src/Pecube/input $pecube_dir
 
 
 
-ipython PATH/modify_input_files.py $run_id
+ipython script_dir/modify_input_files.py $run_id
 
 cd $pecube_dir
 bin/Pecube
 
 cp $run_id/Comparison.txt ~eqsarah/ssrd_pecube/comparisons/Comparison.$run_id.txt
 
-ipython PATH/parse_results.py $run_id
+ipython script_dir/parse_results.py $run_id
 
 cd ~eqsarah
 rm -rf $pecube_dir

@@ -198,6 +198,7 @@ def write_fault_hist_lines(fault_line, fault_line_no, input_file, output_file):
     input_file.close()
     output_file.close()
 
+
 def write_lines(line_string, line_num, input_file, output_file):
     """
     Opens the fault_parameters.txt file and writes a single fault history line,
@@ -219,12 +220,12 @@ def write_lines(line_string, line_num, input_file, output_file):
         line_no = line_no + 1
         
         if line_no == line_num:
-            mod_line = line[:start_pt] + line_str
+            mod_line = line[:start_pt] + line_string
             output_file.write(mod_line)
         
         else:
             output_file.write(line)
-
+            
             
     input_file.close()
     output_file.close()
@@ -232,7 +233,8 @@ def write_lines(line_string, line_num, input_file, output_file):
 
 def modify_fault_history(fault_params_dict, fault_list, 
                        fault_hist_first_lines_dict, time_int_dict, 
-                       input_file = 'file', output_file = 'file'):
+                       input_file = 'file', output_file = 'file',
+                       use_temp=True, temp_file='fault_params.temp'):
     """
     Takes Pecube fault_parameters.txt and modifies the parameters for fault
     slip through time.  Works for all faults at a time.  Needs a dict of fault
@@ -243,6 +245,9 @@ def modify_fault_history(fault_params_dict, fault_list,
     """
     fpd = fault_params_dict    
     fld = fault_hist_first_lines_dict
+
+    if use_temp:
+        rename_fault_params_old(temp_file, input_file)
     
     for fault in fault_list:
         fault_line_no = fld[ 'fl{}'.format(fault) ]
@@ -256,10 +261,12 @@ def modify_fault_history(fault_params_dict, fault_list,
             rate = fpd[ 'r{}{}'.format(fault, t_int) ]
             
             fault_line = '{} {} {} \n'.format(time_1, time_2, rate)
-            write_fault_hist_lines(fault_line, fault_line_no, input_file,
-                                   output_file)
-            rename_fault_params_old(input_file, output_file)            
+
+            write_lines(fault_line, fault_line_no, temp_file, output_file)
+            rename_fault_params_old(temp_file, output_file)            
             fault_line_no += 1
+
+    subprocess.call('rm {}'.format(temp_file), shell=True)
 
 
 def modify_topo_parameters(topo_param_dict, input_file, output_file):

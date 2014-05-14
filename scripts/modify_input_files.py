@@ -33,7 +33,7 @@ topo_param_dict = {'run_dir' : {'fl' : 7,
 # open pandas df and get run parameters
 rp = pd.read_csv('run_params.csv', index_col=0)
 
-run_params_dict = rp[rp.run_id == run_id]
+run_params_dict = rp[rp.run_id == run_id].squeeze().to_dict()
 
 # modify the files
 pt.modify_fault_history(run_params_dict, fault_list, fault_fld, time_int_dict,

@@ -15,7 +15,7 @@ min_runs = 1e3
 min_extension = 15
 max_extension = 35
 
-ssrd_dip_deg = 15
+ssrd_dip_deg = 14
 ssrd_dip_rad = np.radians(ssrd_dip_deg)
 ssrd_n_times = 4
 ssrd_age_max = 80
@@ -25,15 +25,15 @@ ssrd_rate_min = 0
 #ssrd_extension_min = None
 #ssrd_extension_max = None
 
-wpf_dip_deg = 40
+wpf_dip_deg = 51
 wpf_dip_rad = np.radians(wpf_dip_deg)
 wpf_n_times = 3
 wpf_age_max = 40
 wpf_age_min = 0
 wpf_rate_max = 4
 wpf_rate_min = 0
-#wpf_extension_min = None
-#wpf_extension_max = None
+wpf_extension_min = 1.5
+wpf_extension_max = 4 
 
 def make_fault_history_df(): # defined here so all variables can be accessed
     ssrd_df=pt.sample_histories(num_samps=num_samples, num_times=ssrd_n_times, 
@@ -60,10 +60,10 @@ def make_fault_history_df(): # defined here so all variables can be accessed
     new_df['net_extension'] = (new_df.ssrd_extension 
                                + new_df.wpf_extension)
     
-    new_df = new_df[(min_extension <= new_df.net_extension)
-                          & (max_extension >= new_df.net_extension)]
-                          #& (new_df.ssrd_extension 
-                          #   >= 2 * new_df.wpf_extension)]
+    new_df = new_df[ (min_extension <= new_df.net_extension)
+                    & (max_extension >= new_df.net_extension)
+                    & (new_df.wpf_extension >= wpf_extension_min)
+                    & (wpf_extension_max >= new_df.wpf_extension)]
     
     return new_df
 
@@ -81,14 +81,14 @@ while len(ssr_history) < min_runs:
 
 
 # make hash functions for jobids
-def job_id_hash(row):
+def run_id_hash(row):
     return hashlib.md5( str (np.random.random() ) ).hexdigest()[:5]
 
-ssr_history['job_id'] = ssr_history.apply(job_id_hash, axis=1)
+ssr_history['run_id'] = ssr_history.apply(run_id_hash, axis=1)
 
-while len(ssr_history.job_id) > len(ssr_history.job_id.unique() ):
+while len(ssr_history.run_id) > len(ssr_history.run_id.unique() ):
 
-    dups = ssr_history.job_id.duplicated()
+    dups = ssr_history.run_id.duplicated()
     
     ssr_history.loc[dups.index, dups] = dups.apply(hash_row2)
 
