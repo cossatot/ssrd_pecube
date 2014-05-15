@@ -2,7 +2,6 @@
 
 cd ~eqsarah
 
-#run_id=7a80c
 run_id=$1
 pecube_dir=pecube_temps/$run_id/Pecube
 script_dir=~eqsarah/src/Pecube/scripts
@@ -22,16 +21,20 @@ cp -R src/Pecube/data $pecube_dir
 cp -R src/Pecube/input $pecube_dir
 
 
+# Modify fault_parameters.txt with a Python script
+ipython $script_dir/modify_input_files.py $run_id
 
-ipython script_dir/modify_input_files.py $run_id
-
+# run Pecube
 cd $pecube_dir
 bin/Pecube
 
+# copy results to persistent directory
 cp $run_id/Comparison.txt ~eqsarah/ssrd_pecube/comparisons/Comparison.$run_id.txt
 
-ipython script_dir/parse_results.py $run_id
+# parse results (not ready yet)
+#ipython $script_dir/parse_results.py $run_id
 
+# clean up
 cd ~eqsarah
 rm -rf $pecube_dir
 
