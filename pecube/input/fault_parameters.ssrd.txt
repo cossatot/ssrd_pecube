@@ -23,7 +23,7 @@ $ segment (x,y) coordinates
 
 
 $ number of time intervals to define its motion story
-6
+4
 $1
 
 $ time interval (in geological time) and velocity
@@ -51,7 +51,7 @@ $ segment (x,y) coordinates
 -17. -2.
 
 $ number of time intervals to define its motion story
-1
+3
 
 $ time interval (in geological time) and velocity
 $ thrust is negative, normal is positive

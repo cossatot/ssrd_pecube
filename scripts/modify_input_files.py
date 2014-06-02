@@ -5,17 +5,18 @@ import pecube_tools as pt
 
 
 # filenames and arguments
-run_id = sys.argv[0]
+run_id = sys.argv[1]
+print(run_id)
+input_fault_file = '/home/UNLV2/geology/eqsarah/src/Pecube/input/fault_parameters.ssrd.txt'
 
-input_fault_file = '~eqsarah/src/pecube/input/fault_parameters.ssrd.txt'
+output_fault_file = ('/home/UNLV2/geology/eqsarah/pecube_temps/{}/Pecube/input/fault_parameters.txt'.format(run_id) )
+print(output_fault_file)
 
-output_fault_file = ('~eqsarah/pecube_temps/{}/Pecube/input/'
-                     + 'fault_parameters.txt'.format(run_id) )
+#input_topo_file = '/home/UNLV2/geology/eqsarah/src/Pecube/input/topo_parameters
+#.txt'
 
-input_topo_file = '~eqsarah/src/pecube/input/topo_parameters.ssrd.txt'
-
-output_topo_file = ('~eqsarah/pecube_temps/{}/Pecube/input/'
-                     + 'topo_parameters.txt'.format(run_id) )
+#output_topo_file = ('/home/UNLV2/geology/eqsarah/pecube_temps/{}/Pecube/input/'
+#                     + 'topo_parameters.txt'.format(run_id) )
 
 # other fixed parameters
 fault_list = ['A', 'B']
@@ -31,7 +32,8 @@ topo_param_dict = {'run_dir' : {'fl' : 7,
                   }
 
 # open pandas df and get run parameters
-rp = pd.read_csv('run_params.csv', index_col=0)
+rp = pd.read_csv('/home/UNLV2/geology/eqsarah/src/Pecube/scripts/run_params.csv'
+, index_col=0)
 
 run_params_dict = rp[rp.run_id == run_id].squeeze().to_dict()
 
@@ -40,6 +42,3 @@ pt.modify_fault_history(run_params_dict, fault_list, fault_fld, time_int_dict,
                         input_fault_file, output_fault_file)
 
 #pt.modify_topo_parameters(topo_param_dict, input_topo_file, output_topo_file)
-
-
-

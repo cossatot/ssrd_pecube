@@ -12,7 +12,7 @@ num_samples = 1e4
 min_runs = 1e3
 
 # geological constraints:  Maybe make JSON/other config file?
-min_extension = 15
+min_extension = 8
 max_extension = 35
 
 ssrd_dip_deg = 14

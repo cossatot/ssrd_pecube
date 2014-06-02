@@ -1,16 +1,18 @@
 #!/bin/bash
-
+module load mpi/openmpi-1.6
 cd ~eqsarah
 
 run_id=$1
 pecube_dir=pecube_temps/$run_id/Pecube
-script_dir=~eqsarah/src/Pecube/scripts
+script_dir=~/src/Pecube/scripts
 
 mkdir -p ssrd_pecube/comparisons
 
 # make temp directory for running Pecube, copy relevant stuff
 mkdir -p pecube_temps/$run_id
 
+mkdir -p $pecube_dir/ssrd1
+mkdir -p $pecube_dir/VTK
 mkdir -p $pecube_dir/data
 mkdir -p $pecube_dir/input
 mkdir -p $pecube_dir/bin
@@ -20,7 +22,6 @@ cp -R src/Pecube/bin $pecube_dir
 cp -R src/Pecube/data $pecube_dir
 cp -R src/Pecube/input $pecube_dir
 
-
 # Modify fault_parameters.txt with a Python script
 ipython $script_dir/modify_input_files.py $run_id
 
@@ -29,7 +30,7 @@ cd $pecube_dir
 bin/Pecube
 
 # copy results to persistent directory
-cp $run_id/Comparison.txt ~eqsarah/ssrd_pecube/comparisons/Comparison.$run_id.txt
+cp ssrd1/Comparison.txt ~/ssrd_pecube/comparisons/Comparison.$run_id.txt
 
 # parse results (not ready yet)
 #ipython $script_dir/parse_results.py $run_id
@@ -37,5 +38,3 @@ cp $run_id/Comparison.txt ~eqsarah/ssrd_pecube/comparisons/Comparison.$run_id.tx
 # clean up
 cd ~eqsarah
 rm -rf $pecube_dir
-
-exit 0
