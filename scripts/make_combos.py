@@ -5,10 +5,10 @@ import hashlib
 
 #setup
 np.random.seed(70)
-run_params_file = 'run_params.csv'
+run_params_file = 'run_params9k.csv'
 
 #run info
-num_samples = 1e4
+num_samples = 9e3
 min_runs = 9e3
 
 # geological constraints:  Maybe make JSON/other config file?
@@ -89,6 +89,7 @@ ssr_history['run_id'] = ssr_history.apply(run_id_hash, axis=1)
 while len(ssr_history.run_id) > len(ssr_history.run_id.unique() ):
 
     dups = ssr_history.run_id.duplicated()
+
     dups = dups[dups]
     
     ssr_history.loc[dups.index, 'run_id'] = dups.apply(run_id_hash)
