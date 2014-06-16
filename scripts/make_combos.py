@@ -4,12 +4,12 @@ import pecube_tools as pt
 import hashlib
 
 #setup
-np.random.seed(69)
+np.random.seed(70)
 run_params_file = 'run_params.csv'
 
 #run info
 num_samples = 1e4
-min_runs = 1e3
+min_runs = 9e3
 
 # geological constraints:  Maybe make JSON/other config file?
 min_extension = 8
@@ -79,7 +79,7 @@ while len(ssr_history) < min_runs:
     ssr_history = pd.concat([ssr_history, new_df], axis=0 )
     ssr_history.reset_index(inplace=True, drop=True)
 
-
+print('done making base ssr_history')
 # make hash functions for jobids
 def run_id_hash(row):
     return hashlib.md5( str (np.random.random() ) ).hexdigest()[:5]
@@ -89,7 +89,8 @@ ssr_history['run_id'] = ssr_history.apply(run_id_hash, axis=1)
 while len(ssr_history.run_id) > len(ssr_history.run_id.unique() ):
 
     dups = ssr_history.run_id.duplicated()
+    dups = dups[dups]
     
-    ssr_history.loc[dups.index, dups] = dups.apply(hash_row2)
+    ssr_history.loc[dups.index, 'run_id'] = dups.apply(run_id_hash)
 
 ssr_history.to_csv(run_params_file)

@@ -436,13 +436,12 @@ def calc_horiz_strain_history(fault_param_dict, timesteps = [1], fault = 'A',
         time_2 = fpd[ 't{}{}'.format(fault, t_int + 1) ]
         rate = fpd[ 'r{}{}'.format(fault, t_int) ]
         
-        t1_index = np.where(time_vector == time_1)
-        t2_index = np.where(time_vector == time_2)
-        
-        t1_index = t1_index[0]
-        t2_index = t2_index[0] + 1
-        
+        t1_index = np.argmin( np.abs(time_vector - time_1) )
+        t2_index = np.argmin( np.abs(time_vector - time_2) ) + 1
+
         slip_rate_w_time[t1_index : t2_index] = rate
     horiz_strain_w_time = slip_rate_w_time * np.cos(fault_dip)
     
     return horiz_strain_w_time
+
+
