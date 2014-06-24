@@ -4,12 +4,12 @@ import pecube_tools as pt
 import hashlib
 
 #setup
-np.random.seed(70)
-run_params_file = 'run_params9k.csv'
+np.random.seed(71)
+run_params_file = 'run_params_heat_mods.csv'
 
 #run info
-num_samples = 9e3
-min_runs = 9e3
+num_samples = 5e4
+min_runs = 1e4
 
 # geological constraints:  Maybe make JSON/other config file?
 min_extension = 8
@@ -34,6 +34,12 @@ wpf_rate_max = 4
 wpf_rate_min = 0
 wpf_extension_min = 1.5
 wpf_extension_max = 4 
+
+# thermal parameters
+moho_min = 600.
+moho_max = 1100.
+heat_prod_min = 5.
+heat_prod_max = 50.
 
 def make_fault_history_df(): # defined here so all variables can be accessed
     ssrd_df=pt.sample_histories(num_samps=num_samples, num_times=ssrd_n_times, 
@@ -79,10 +85,10 @@ while len(ssr_history) < min_runs:
     ssr_history = pd.concat([ssr_history, new_df], axis=0 )
     ssr_history.reset_index(inplace=True, drop=True)
 
-
+print('done making base ssr_history')
 # make hash functions for jobids
 def run_id_hash(row):
-    return hashlib.md5( str (np.random.random() ) ).hexdigest()[:5]
+    return hashlib.md5( str (np.random.random() ) ).hexdigest()[:6]
 
 ssr_history['run_id'] = ssr_history.apply(run_id_hash, axis=1)
 
@@ -93,5 +99,12 @@ while len(ssr_history.run_id) > len(ssr_history.run_id.unique() ):
     dups = dups[dups]
     
     ssr_history.loc[dups.index, 'run_id'] = dups.apply(run_id_hash)
+
+ssr_history['moho_T'] = np.random.uniform(moho_min, moho_max, 
+                                          len(ssr_history.index) )
+
+
+ssr_history['heat_prod'] = np.random.uniform(heat_prod_min, heat_prod_max,
+                                             len(ssr_history.index) )
 
 ssr_history.to_csv(run_params_file)

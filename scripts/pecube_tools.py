@@ -269,7 +269,8 @@ def modify_fault_history(fault_params_dict, fault_list,
     subprocess.call('rm {}'.format(temp_file), shell=True)
 
 
-def modify_topo_parameters(topo_param_dict, input_file, output_file):
+def modify_topo_parameters(topo_param_dict, param_line, 
+                           input_file, output_file):
     """
     Modifies Pecube topo_parameters.txt file.
 
@@ -278,11 +279,14 @@ def modify_topo_parameters(topo_param_dict, input_file, output_file):
 
     Currently just replaces lines, so '
     """
-    for param in topo_param_dict.keys:
-        line_num = topo_param_dict[param]['fl']
-        line_str = topo_param_dict[param]['value'] 
+    tpd = topo_param_dict
 
-        write_lines(line_str, line_num, input_file, output_file)
+    thermo_line_str = '30.,30,25.,{},14.,0.,{}'.format(tpd['moho_T'],
+                                                       tpd['heat_prod'])
+
+    write_lines(thermo_line_str, param_line, input_file, output_file)
+
+    return
 
 
 def rename_fault_params_old(input_file, output_file):
@@ -436,13 +440,12 @@ def calc_horiz_strain_history(fault_param_dict, timesteps = [1], fault = 'A',
         time_2 = fpd[ 't{}{}'.format(fault, t_int + 1) ]
         rate = fpd[ 'r{}{}'.format(fault, t_int) ]
         
-        t1_index = np.where(time_vector == time_1)
-        t2_index = np.where(time_vector == time_2)
-        
-        t1_index = t1_index[0]
-        t2_index = t2_index[0] + 1
-        
+        t1_index = np.argmin( np.abs(time_vector - time_1) )
+        t2_index = np.argmin( np.abs(time_vector - time_2) ) + 1
+
         slip_rate_w_time[t1_index : t2_index] = rate
     horiz_strain_w_time = slip_rate_w_time * np.cos(fault_dip)
     
     return horiz_strain_w_time
+
+

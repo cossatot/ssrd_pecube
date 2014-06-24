@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #PBS -l nodes=1:ppn=1
-#PBS -l walltime=3:00:00
+#PBS -l walltime=2:10:00
 #PBS -k oe
 #PBS -m bea
 #PBS -M richard.h.styron@gmail.com
@@ -9,34 +9,36 @@
 source /home/styron/.bashrc
 
 cd /home/styron/
-
-rm -f fault_params.temp # remove fault_params, if it's there
+#sleep 1m
+#rm -f fault_params.temp # remove fault_params, if it's there
 
 #run_id=fb7f0
 run_id=${run_id}
-pecube_dir=pecube_temps/$run_id/Pecube
+#pecube_dir=pecube_temps/$run_id/Pecube
+pecube_dir=$TMPDIR/Pecube
 script_dir=~/src/Pecube/scripts
 
-mkdir -p ~/pecube_runs/comparisons
+#mkdir -p ~/pecube_runs/comparisons
 
-mkdir -p $pecube_dir/ssrd1
-mkdir -p $pecube_dir/VTK
-mkdir -p $pecube_dir/data
-mkdir -p $pecube_dir/input
-mkdir -p $pecube_dir/bin
+#mkdir -p $pecube_dir/ssrd1
+#mkdir -p $pecube_dir/VTK
+#mkdir -p $pecube_dir/data
+#mkdir -p $pecube_dir/input
+#mkdir -p $pecube_dir/bin
 #mkdir -p $pecube_dir/$run_id
-
+mkdir -p $pecube_dir/ssrd1 
+#cp -R ~/src/Pecube/*.* $pecube_dir
 cp -R src/Pecube/bin $pecube_dir
 cp -R src/Pecube/data $pecube_dir
 cp -R src/Pecube/input $pecube_dir
 
+cd $pecube_dir
 
 # Modify fault_parameters.txt with a Python script
-ipython $script_dir/modify_input_files.py $run_id
-rm -f fault_params.temp # remove fault_params, if it's there
+python $script_dir/modify_input_files.py $run_id $pecube_dir
 
 # run Pecube
-cd $pecube_dir
+#cd $pecube_dir
 bin/Pecube
 
 # copy results to persistent directory
@@ -46,7 +48,7 @@ cp ssrd1/Comparison.txt ~/pecube_runs/comparisons/Comparison.$run_id.txt
 #ipython $script_dir/parse_results.py $run_id
 
 # clean up
-cd /home/styron
-rm -rf $pecube_dir
+#cd /home/styron
+#rm -rf $pecube_dir
 
 exit 0
