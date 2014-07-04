@@ -50,7 +50,7 @@ $ (6) the longitude and latitude of the bottom left corner of the topo file
 -114.6004165456 38.799583430181
 
 $ (7) the number of time steps in the tectonomorphic scenario
-3
+1
 
 $ (8) the erosional time scale (exponential decay rate of topography)
 0.
@@ -60,8 +60,8 @@ $ (a) a starting time (in Myr in the past)
 $ (b) an amplification factor for the topography
 $ (c) an offset factor (in km), 
 $ (d) an output flag (for this time step: 0=no output / 1=output)
-40. 1. 0. 1
-0. 1. 0. 1
+70. 1. 0. 0
+0. 1. 0. 0
 
 $ (10) a flag for isostasy (1 isostasy on; 0 isostast off)
 $   crustal density (in kg/m3), mantle density (kg/m3), Young modulus (in Pa),
