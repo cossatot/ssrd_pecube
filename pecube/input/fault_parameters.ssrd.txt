@@ -28,10 +28,10 @@ $1
 
 $ time interval (in geological time) and velocity
 $ thrust is negative, normal is positive
-45. 40. 2.
-40. 26. 0.001
-26. 17. 2.5
-17. 16.	4.
+28.9079749273 21.2539909841 0.385277575717 
+21.2539909841 20.0244573542 3.66392143492 
+20.0244573542 16.1434040788 5.73175628098 
+16.1434040788 0.0 0.0 
 
 
 
@@ -41,7 +41,7 @@ $ thrust is negative, normal is positive
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 $fault 2
--114.37265 38.97542 -114.367701 38.906318
+
 
 $ number of points defining fault
 2
@@ -55,9 +55,9 @@ $ number of time intervals to define its motion story
 
 $ time interval (in geological time) and velocity
 $ thrust is negative, normal is positive
-45. 40. 0.
-40. 26. 0.
-26. 17. 1.
+36.2138687406 16.7436580146 0.0776314734833 
+16.7436580146 9.63879691317 0.0556723619166 
+9.63879691317 0.0 0.235291808718 
 
 
 

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-for run in $(cat finish_1000_runs.txt) ; do
+run_ids=($(cat run_id_heat_list.txt))
+
+for run in ${run_ids[@]:2000:100001} ; do
     qsub -v run_id=$run run_pecube_job.pbs
-    sleep 10s
+    sleep 60s
 
 done
-
-logout

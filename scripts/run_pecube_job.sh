@@ -1,5 +1,5 @@
 #!/bin/bash
-#module load mpi/openmpi-1.6
+module load mpi/openmpi-1.6
 cd ~eqsarah
 
 run_id=$1
@@ -22,6 +22,7 @@ cp -R src/Pecube/bin $pecube_dir
 cp -R src/Pecube/data $pecube_dir
 cp -R src/Pecube/input $pecube_dir
 
+
 # Modify fault_parameters.txt with a Python script
 ipython $script_dir/modify_input_files.py $run_id
 
@@ -38,3 +39,5 @@ cp ssrd1/Comparison.txt ~/ssrd_pecube/comparisons/Comparison.$run_id.txt
 # clean up
 cd ~eqsarah
 rm -rf $pecube_dir
+
+exit 0
