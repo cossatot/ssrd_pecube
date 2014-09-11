@@ -20,7 +20,7 @@ print("output_fault_file is", output_fault_file)
 # other fixed parameters
 fault_list = ['A', 'B']
 
-fault_fld = {'flA' : 31, 'flB' : 58 }     # first lines in fault_params.txt
+fault_fld = {'flA' : 47, 'flB' : 78 }     # first lines in fault_params.txt
 
 time_int_dict = {'A' : 4, 'B' : 3}        # number of time intervals per fault
 
