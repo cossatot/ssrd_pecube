@@ -1,0 +1,83 @@
+2
+
+$ fault 1
+$ two points (in longitude-latitude) defining the y axis of the
+$ coordinate system used to define the faults
+$ the x-axis is to the right of the y-axis
+-114.478 38.132 -113.970 39.517
+
+$ 
+$ number of points defining fault
+23
+
+
+$ segment (x,y) coordinates
+-11.7704 5.3134
+-10.9088 4.62718
+-9.77752 4.15235
+-8.58507 3.77938
+-7.30336 3.86582
+-5.73694 3.78882
+-4.26743 3.4228
+-2.49594 2.88473
+-0.809665 2.5771
+0.556317 2.27129
+2.38034 1.83513
+4.52412 1.30347
+6.31909 0.339428
+7.6991 -0.528581
+10.2258 -0.713212
+12.9703 -0.652086
+14.6278 -1.44501
+16.2758 -2.38267
+18.0366 -3.26987
+19.869 -3.74866
+22.8495 -4.79606
+26.1843 -5.93915
+29.545 -7.09942
+
+
+
+$ number of time intervals to define its motion story
+4
+
+
+$ time interval (in geological time) and velocity
+$ thrust is negative, normal is positive
+40.303055 39.070258 8.422245
+39.070258 18.691315 0.016420
+18.691315 16.011384 7.524269
+16.011384 0.000000  0.000000
+
+
+
+
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+$fault 2
+$-114.37265 38.97542 -114.367701 38.906318
+
+$ number of points defining fault
+4
+
+
+$ segment (x,y) coordinates
+-13.1366 5.487465
+-14.6529 3.667585
+-16.3769 1.620192
+-18.7654 -1.27504
+
+
+$ number of time intervals to define its motion story
+3
+
+$ time interval (in geological time) and velocity
+$ thrust is negative, normal is positive
+36.129337 35.220390 0.193428
+35.220390 14.672370 0.103451
+14.672370 0.000000 0.063581
+
+
+
